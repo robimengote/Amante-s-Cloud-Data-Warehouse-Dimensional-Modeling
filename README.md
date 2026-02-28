@@ -24,7 +24,7 @@ This repository contains the database architecture, schema definitions, and dime
 
 
 
-While the \*\*\[ETL Pipeline Repository](github.com/robimengote/Amante-s-Supabase-Full-Cloud-ETL-Pipeline)\*\* handles the extraction and cleaning of raw POS data, this project focuses strictly on the \*\*Data Warehouse design\*\*. The goal was to migrate a fragile, flat-file reporting system into a robust, normalized \*\*Star Schema\*\* deployed on PostgreSQL (Supabase), optimized for fast, complex querying in Power BI.
+While the \*\*\[ETL Pipeline Repository](https://github.com/robimengote/Amante-s-Supabase-Full-Cloud-ETL-Pipeline)\*\* handles the extraction and cleaning of raw POS data, this project focuses strictly on the \*\*Data Warehouse design\*\*. The goal was to migrate a fragile, flat-file reporting system into a robust, normalized \*\*Star Schema\*\* deployed on PostgreSQL (Supabase), optimized for fast, complex querying in Power BI.
 
 
 
@@ -62,7 +62,11 @@ The dimension tables store the descriptive context of the business. I implemente
 
 \### 📅 1. The Date Dimension (`dim\_date`)
 
+
+
 Instead of relying on basic SQL date functions, I engineered a comprehensive Date Dimension using a custom Python script (`pandas` \& `holidays` library) to enrich transaction dates with deep business context.
+
+
 
 \* \*\*Custom Boolean Flags:\*\* Added `is\_weekend` and `is\_holiday` flags to enable instant comparison of high-traffic vs. low-traffic days.
 
@@ -72,7 +76,11 @@ Instead of relying on basic SQL date functions, I engineered a comprehensive Dat
 
 \### ☕ 2. The Product Dimension (`dim\_product`)
 
+
+
 Normalized over 100+ unique menu combinations into a clean hierarchy.
+
+
 
 \* \*\*Categorization:\*\* Grouped items into `category` and `sub\_category`.
 
@@ -114,15 +122,9 @@ This is the center of the Star Schema, designed for maximum query performance an
 
 
 
-To protect the strict constraints of the `final\_fact\_sales` table, I designed a \*\*Schema-on-Read\*\* quarantine workflow.
-
-
-
-If the automated pipeline encounters an unrecognized product (e.g., a newly launched menu item not yet in `dim\_product`), the row is diverted to `staging\_quarantine`. This table uses flexible `TEXT` data types to prevent pipeline crashes. 
-
-
-
-Once the dimension tables are manually updated, a secondary Stored Procedure (`reprocess\_quarantine`) is triggered to securely migrate the repaired data into the final Star Schema, ensuring zero data loss.
+* To protect the strict constraints of the `final\_fact\_sales` table, I designed a \*\*Schema-on-Read\*\* quarantine workflow.
+* If the automated pipeline encounters an unrecognized product (e.g., a newly launched menu item not yet in `dim\_product`), the row is diverted to `staging\_quarantine`. This table uses flexible `TEXT` data types to prevent pipeline crashes. 
+* Once the dimension tables are manually updated, a secondary Stored Procedure (`reprocess\_quarantine`) is triggered to securely migrate the repaired data into the final Star Schema, ensuring zero data loss.
 
 
 
