@@ -4,13 +4,13 @@
 
 <p align="center">
 
-&nbsp; <img src="\[https://img.shields.io/badge/PostgreSQL-Advanced\_SQL-4169E1?logo=postgresql\&logoColor=white](https://img.shields.io/badge/PostgreSQL-Advanced\_SQL-4169E1?logo=postgresql\&logoColor=white)" alt="PostgreSQL">
+&nbsp; <img src="https://img.shields.io/badge/PostgreSQL-Advanced\_SQL-4169E1?logo=postgresql\&logoColor=white" alt="PostgreSQL">
 
-&nbsp; <img src="\[https://img.shields.io/badge/Supabase-Database\_Hosting-3ECF8E?logo=supabase\&logoColor=white](https://img.shields.io/badge/Supabase-Database\_Hosting-3ECF8E?logo=supabase\&logoColor=white)" alt="Supabase">
+&nbsp; <img src="https://img.shields.io/badge/Supabase-Database\_Hosting-3ECF8E?logo=supabase\&logoColor=white" alt="Supabase">
 
-&nbsp; <img src="\[https://img.shields.io/badge/Python-3.11-blue?logo=python\&logoColor=white](https://img.shields.io/badge/Python-3.11-blue?logo=python\&logoColor=white)" alt="Python">
+&nbsp; <img src="https://img.shields.io/badge/Python-3.11-blue?logo=python\&logoColor=white" alt="Python">
 
-&nbsp; <img src="\[https://img.shields.io/badge/Data\_Architecture-Star\_Schema-FF6F00?logo=databricks\&logoColor=white](https://img.shields.io/badge/Data\_Architecture-Star\_Schema-FF6F00?logo=databricks\&logoColor=white)" alt="Architecture">
+&nbsp; <img src="https://img.shields.io/badge/Data\_Architecture-Star\_Schema-FF6F00?logo=databricks\&logoColor=white" alt="Architecture">
 
 </p>
 
