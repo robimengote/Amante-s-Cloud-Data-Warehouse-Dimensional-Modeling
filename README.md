@@ -4,19 +4,21 @@
 
 <p align="center">
 
-&nbsp; <img src="https://img.shields.io/badge/PostgreSQL-Advanced\_SQL-4169E1?logo=postgresql\&logoColor=white" alt="PostgreSQL">
+&nbsp; <img src="\[https://img.shields.io/badge/PostgreSQL-Advanced\_SQL-4169E1?logo=postgresql\&logoColor=white](https://img.shields.io/badge/PostgreSQL-Advanced\_SQL-4169E1?logo=postgresql\&logoColor=white)" alt="PostgreSQL">
 
-&nbsp; <img src="https://img.shields.io/badge/Supabase-Database\_Hosting-3ECF8E?logo=supabase\&logoColor=white" alt="Supabase">
+&nbsp; <img src="\[https://img.shields.io/badge/Supabase-Database\_Hosting-3ECF8E?logo=supabase\&logoColor=white](https://img.shields.io/badge/Supabase-Database\_Hosting-3ECF8E?logo=supabase\&logoColor=white)" alt="Supabase">
 
-&nbsp; <img src="https://img.shields.io/badge/Python-3.11-blue?logo=python\&logoColor=white" alt="Python">
+&nbsp; <img src="\[https://img.shields.io/badge/Python-3.11-blue?logo=python\&logoColor=white](https://img.shields.io/badge/Python-3.11-blue?logo=python\&logoColor=white)" alt="Python">
 
-&nbsp; <img src="https://img.shields.io/badge/Data\_Architecture-Star\_Schema-FF6F00?logo=databricks\&logoColor=white" alt="Architecture">
+&nbsp; <img src="\[https://img.shields.io/badge/Data\_Architecture-Star\_Schema-FF6F00?logo=databricks\&logoColor=white](https://img.shields.io/badge/Data\_Architecture-Star\_Schema-FF6F00?logo=databricks\&logoColor=white)" alt="Architecture">
 
 </p>
 
 
 
 \## 📌 Project Overview
+
+
 
 This repository contains the database architecture, schema definitions, and dimensional modeling logic for a retail food and beverage business. 
 
@@ -28,7 +30,11 @@ While the \*\*\[ETL Pipeline Repository](https://github.com/robimengote/Amante-s
 
 \## 🎯 The Architectural Challenge
 
+
+
 Flat transactional data is notoriously difficult to analyze at scale. Without a relational structure, the business struggled to answer precise questions like:
+
+
 
 \* \*"Do we sell more iced drinks on weekends versus weekdays?"\*
 
@@ -42,15 +48,13 @@ To solve this, I designed a \*\*Star Schema\*\* that separates business metrics 
 
 
 
-
-
-
-
 ---
 
 
 
 \## 🏗️ The Dimension Tables (The Context)
+
+
 
 The dimension tables store the descriptive context of the business. I implemented \*\*Surrogate Keys\*\* (`GENERATED ALWAYS AS IDENTITY`) for all dimensions to protect the database from changes in the source system.
 
@@ -88,6 +92,8 @@ Simple, integer-mapped tables to track whether orders were Dine-In, Takeout, or 
 
 \## ⭐ The Fact Table (`final\_fact\_sales`)
 
+
+
 This is the center of the Star Schema, designed for maximum query performance and strict data integrity.
 
 
@@ -105,6 +111,8 @@ This is the center of the Star Schema, designed for maximum query performance an
 
 
 \## 🛡️ Error Handling: The Quarantine Architecture (`staging\_quarantine`)
+
+
 
 To protect the strict constraints of the `final\_fact\_sales` table, I designed a \*\*Schema-on-Read\*\* quarantine workflow.
 
