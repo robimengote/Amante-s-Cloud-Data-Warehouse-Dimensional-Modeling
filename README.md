@@ -1,4 +1,4 @@
-<h1 align="center">🗄️ Amante's Coffee: Cloud Data Warehouse \& Dimensional Modeling</h1>
+\# 🗄️ Amante's Coffee: Cloud Data Warehouse \& Dimensional Modeling
 
 
 
@@ -24,7 +24,7 @@ This repository contains the database architecture, schema definitions, and dime
 
 
 
-While the \*\*\[ETL Pipeline Repository](https://github.com/robimengote/Amante-s-Supabase-Full-Cloud-ETL-Pipeline)\*\* handles the extraction and cleaning of raw POS data, this project focuses strictly on the \*\*Data Warehouse design\*\*. The goal was to migrate a fragile, flat-file reporting system into a robust, normalized \*\*Star Schema\*\* deployed on PostgreSQL (Supabase), optimized for fast, complex querying in Power BI.
+While the \*\*\[ETL Pipeline Repository](github.com/robimengote/Amante-s-Supabase-Full-Cloud-ETL-Pipeline)\*\* handles the extraction and cleaning of raw POS data, this project focuses strictly on the \*\*Data Warehouse design\*\*. The goal was to migrate a fragile, flat-file reporting system into a robust, normalized \*\*Star Schema\*\* deployed on PostgreSQL (Supabase), optimized for fast, complex querying in Power BI.
 
 
 
