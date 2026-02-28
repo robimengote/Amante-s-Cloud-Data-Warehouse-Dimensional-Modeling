@@ -1,4 +1,4 @@
-<h1 align="center">Amante's Coffee: Cloud Data Warehouse and Dimensional Modeling</h1>
+<h1 align="center">🗄️ Amante's Coffee: Cloud Data Warehouse \& Dimensional Modeling</h1>
 
 
 
@@ -36,11 +36,11 @@ Flat transactional data is notoriously difficult to analyze at scale. Without a 
 
 
 
-\* \*"Do we sell more iced drinks on weekends versus weekdays?"\*
+\* "Do we sell more iced drinks on weekends versus weekdays?"
 
-\* \*"How do our sales perform on national holidays compared to regular operating days?"\*
+\* "How do our sales perform on national holidays compared to regular operating days?"
 
-\* \*"What is our most profitable flavor add-on across all categories?"\*
+\* "What is our most profitable flavor add-on across all categories?"
 
 
 
@@ -56,31 +56,31 @@ To solve this, I designed a \*\*Star Schema\*\* that separates business metrics 
 
 
 
-The dimension tables store the descriptive context of the business. I implemented \*\*Surrogate Keys\*\* (`GENERATED ALWAYS AS IDENTITY`) for all dimensions to protect the database from changes in the source system.
+The dimension tables store the descriptive context of the business. I implemented \*\*Surrogate Keys\*\* (<code>GENERATED ALWAYS AS IDENTITY</code>) for all dimensions to protect the database from changes in the source system.
 
 
 
-\### 📅 1. The Date Dimension (`dim\_date`)
+\### 📅 1. The Date Dimension (<code>dim\_date</code>)
 
-Instead of relying on basic SQL date functions, I engineered a comprehensive Date Dimension using a custom Python script (`pandas` \& `holidays` library) to enrich transaction dates with deep business context.
+Instead of relying on basic SQL date functions, I engineered a comprehensive Date Dimension using a custom Python script (<code>pandas</code> \& <code>holidays</code> library) to enrich transaction dates with deep business context.
 
-\* \*\*Custom Boolean Flags:\*\* Added `is\_weekend` and `is\_holiday` flags to enable instant comparison of high-traffic vs. low-traffic days.
+\* \*\*Custom Boolean Flags:\*\* Added <code>is\_weekend</code> and <code>is\_holiday</code> flags to enable instant comparison of high-traffic vs. low-traffic days.
 
-\* \*\*Granular Time Intelligence:\*\* Pre-calculated columns for `day\_name`, `month\_name`, `quarter`, and `year` to eliminate the need for heavy DAX processing in Power BI.
+\* \*\*Granular Time Intelligence:\*\* Pre-calculated columns for <code>day\_name</code>, <code>month\_name</code>, <code>quarter</code>, and <code>year</code> to eliminate the need for heavy DAX processing in Power BI.
 
 
 
-\### ☕ 2. The Product Dimension (`dim\_product`)
+\### ☕ 2. The Product Dimension (<code>dim\_product</code>)
 
 Normalized over 100+ unique menu combinations into a clean hierarchy.
 
-\* \*\*Categorization:\*\* Grouped items into `category` and `sub\_category`.
+\* \*\*Categorization:\*\* Grouped items into <code>category</code> and <code>sub\_category</code>.
 
-\* \*\*Attribute Isolation:\*\* Extracted `variation` (Hot/Cold), `size`, `sugar\_level`, and `flavor` customization options into distinct columns, allowing the business to finally track add-on conversion rates.
+\* \*\*Attribute Isolation:\*\* Extracted <code>variation</code> (Hot/Cold), <code>size</code>, <code>sugar\_level</code>, and <code>flavor</code> customization options into distinct columns, allowing the business to finally track add-on conversion rates.
 
 
 
-\### 💳 3. Operational Dimensions (`dim\_order\_type` \& `dim\_payment\_type`)
+\### 💳 3. Operational Dimensions (<code>dim\_order\_type</code> \& <code>dim\_payment\_type</code>)
 
 Simple, integer-mapped tables to track whether orders were Dine-In, Takeout, or Delivery, and if they were paid via Cash, E-Wallet, or Card.
 
@@ -90,7 +90,7 @@ Simple, integer-mapped tables to track whether orders were Dine-In, Takeout, or 
 
 
 
-\## ⭐ The Fact Table (`final\_fact\_sales`)
+\## ⭐ The Fact Table (<code>final\_fact\_sales</code>)
 
 
 
@@ -98,11 +98,11 @@ This is the center of the Star Schema, designed for maximum query performance an
 
 
 
-\* \*\*Integer Mapping:\*\* All descriptive text was stripped out. The table consists almost entirely of lightweight integer Foreign Keys (e.g., `date\_key`, `product\_id`) and quantitative measures (`quantity`, `total\_order\_amount`, `total\_received\_amount`).
+\* \*\*Integer Mapping:\*\* All descriptive text was stripped out. The table consists almost entirely of lightweight integer Foreign Keys (e.g., <code>date\_key</code>, <code>product\_id</code>) and quantitative measures (<code>quantity</code>, <code>total\_order\_amount</code>, <code>total\_received\_amount</code>).
 
-\* \*\*Strict Foreign Key Constraints:\*\* Implemented `REFERENCES` constraints to ensure absolute referential integrity. A sale cannot be recorded in this table unless its corresponding Date, Product, and Payment Type already exist in the dimension tables.
+\* \*\*Strict Foreign Key Constraints:\*\* Implemented <code>REFERENCES</code> constraints to ensure absolute referential integrity. A sale cannot be recorded in this table unless its corresponding Date, Product, and Payment Type already exist in the dimension tables.
 
-\* \*\*Idempotent Insertion (RPC):\*\* Populated via a custom PostgreSQL Stored Procedure (`update\_final\_fact\_sales`). This ELT process utilizes `NOT EXISTS` logic matching exact order lines to guarantee that duplicate POS line items are never double-counted, even during automated pipeline retries.
+\* \*\*Idempotent Insertion (RPC):\*\* Populated via a custom PostgreSQL Stored Procedure (<code>update\_final\_fact\_sales</code>). This ELT process utilizes <code>NOT EXISTS</code> logic matching exact order lines to guarantee that duplicate POS line items are never double-counted, even during automated pipeline retries.
 
 
 
@@ -110,19 +110,19 @@ This is the center of the Star Schema, designed for maximum query performance an
 
 
 
-\## 🛡️ Error Handling: The Quarantine Architecture (`staging\_quarantine`)
+\## 🛡️ Error Handling: The Quarantine Architecture (<code>staging\_quarantine</code>)
 
 
 
-To protect the strict constraints of the `final\_fact\_sales` table, I designed a \*\*Schema-on-Read\*\* quarantine workflow.
+To protect the strict constraints of the <code>final\_fact\_sales</code> table, I designed a \*\*Schema-on-Read\*\* quarantine workflow.
 
 
 
-If the automated pipeline encounters an unrecognized product (e.g., a newly launched menu item not yet in `dim\_product`), the row is diverted to `staging\_quarantine`. This table uses flexible `TEXT` data types to prevent pipeline crashes. 
+If the automated pipeline encounters an unrecognized product (e.g., a newly launched menu item not yet in <code>dim\_product</code>), the row is diverted to <code>staging\_quarantine</code>. This table uses flexible <code>TEXT</code> data types to prevent pipeline crashes. 
 
 
 
-Once the dimension tables are manually updated, a secondary Stored Procedure (`reprocess\_quarantine`) is triggered to securely migrate the repaired data into the final Star Schema, ensuring zero data loss.
+Once the dimension tables are manually updated, a secondary Stored Procedure (<code>reprocess\_quarantine</code>) is triggered to securely migrate the repaired data into the final Star Schema, ensuring zero data loss.
 
 
 
@@ -134,7 +134,9 @@ Once the dimension tables are manually updated, a secondary Stored Procedure (`r
 
 
 
-\* `/sql/schema\_creation.sql`: The DDL scripts used to generate the tables, primary keys, and foreign key constraints.
+\* <code>/sql/schema\_creation.sql</code>: The DDL scripts used to generate the tables, primary keys, and foreign key constraints.
 
-\* `/python/dim\_date\_generator.py`: The Python script used to dynamically generate and load the enriched calendar table.
+\* <code>/sql/rpc\_transformations.sql</code>: The PostgreSQL Stored Procedures (<code>update\_final\_fact\_sales</code>, <code>reprocess\_quarantine</code>) used for ELT.
+
+\* <code>/python/dim\_date\_generator.py</code>: The Python script used to dynamically generate and load the enriched calendar table.
 
