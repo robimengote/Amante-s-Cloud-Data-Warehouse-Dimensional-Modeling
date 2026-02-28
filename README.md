@@ -1,4 +1,4 @@
-<h1 align="center">🗄️ Amante's Coffee: Cloud Data Warehouse \& Dimensional Modeling</h1>
+<h1 align="center">Amante's Coffee: Cloud Data Warehouse and Dimensional Modeling</h1>
 
 
 
