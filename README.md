@@ -69,3 +69,38 @@ Once the dimension tables are manually updated, a secondary Stored Procedure (<c
 * <code>/sql/schema_creation.sql</code>: The DDL scripts used to generate the tables, primary keys, and foreign key constraints.
 * <code>/sql/rpc_transformations.sql</code>: The PostgreSQL Stored Procedures (<code>update_final_fact_sales</code>, <code>reprocess_quarantine</code>) used for ELT.
 * <code>/python/dim_date_generator.py</code>: The Python script used to dynamically generate and load the enriched calendar table.
+
+
+---
+
+## 📊 Proof of Concept & Results
+
+### 1. Star Schema Data Model (Power BI)
+*The normalized relational model ensuring high-performance filtering and DAX calculations.*
+<p align="center">
+  <img src="assets/bi_modelview.jpg" alt="Power BI ERD" width="800">
+</p>
+
+### 2. The Populated Fact Table (Supabase)
+*The final destination for processed POS data, using strict integer-based Surrogate Keys.*
+<p align="center">
+  <img src="assets/final_fact_table_screenshot.jpg" alt="Fact Table" width="800">
+</p>
+
+### 3. Data Enrichment: Enriched Date Dimension
+*Using Python's `holidays` library to inject business context (is_weekend, is_holiday) directly into the warehouse.*
+<p align="center">
+  <img src="assets/dim_date_screenshot.jpg" alt="Date Dimension" width="800">
+</p>
+
+### 4. Defensive Architecture: The Quarantine Table
+*Rows with unrecognized products are safely diverted here to prevent pipeline failure and maintain data integrity.*
+<p align="center">
+  <img src="assets/quarantine_screenshot.jpg" alt="Quarantine Table" width="800">
+</p>
+
+### 5. Automated ELT Execution (RPC Success)
+*Successful execution of the Pipeline with PostgreSQL Stored Procedure used to transform staging data into the Star Schema.*
+<p align="center">
+  <img src="assets/pipeline_log.jpg" alt="RPC Success" width="800">
+</p>
