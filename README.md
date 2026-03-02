@@ -96,11 +96,11 @@ Once the dimension tables are manually updated, a secondary Stored Procedure (<c
 ### 4. Defensive Architecture: The Quarantine Table
 *Rows with unrecognized products are safely diverted here to prevent pipeline failure and maintain data integrity.*
 <p align="center">
-  <img src="assets/quarantine_screenshot.jpg" alt="Quarantine Table" width="800">
+  <img src="assets/staging_quarantine_screenshot.jpg" alt="Quarantine Table" width="800">
 </p>
 
 ### 5. Automated ELT Execution (RPC Success)
 *Successful execution of the Pipeline with PostgreSQL Stored Procedure used to transform staging data into the Star Schema.*
 <p align="center">
-  <img src="assets/pipeline_log.jpg" alt="RPC Success" width="800">
+  <img src="assets/pipeline_log.png" alt="RPC Success" width="800">
 </p>
